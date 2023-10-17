@@ -1,2 +1,2 @@
-# small-botecs
-A repo for quick-and-dirty (small) BOTECs (Back-Of-The-Envelope-Calculations).
+# quick-botec
+A repo for quick-and-dirty BOTECs (Back-Of-The-Envelope-Calculations).
