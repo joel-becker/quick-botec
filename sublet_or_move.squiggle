@@ -1,0 +1,59 @@
+_sigma(slope, top, start, t) = {
+    f(t) = exp(slope*(t - start))/(1 + exp(slope*(t-start)))
+    result = top * (f(t) - f(start))/f(start)
+    (result + 1) / 5
+}
+
+monthly_preference(t) = normal(500, 300) * t
+p_move_to_sf(t) = _sigma(1, 1, 4, t)
+preference_benefit(t) = (monthly_preference(t) * p_move_to_sf(t))
+
+stuff_rebought = 2k to 3k
+stuff_sold = 1.3k to 2k
+stuff_cost = stuff_rebought - stuff_sold
+
+p_sublet_over_t(t) = truncate(normal(0.4, 0.5), 0, 1)
+rent = 2.05k
+bills = 50 + (150 * 4 * 0.3 / 5)
+monthly_cost = rent + bills
+p_not_solved_sublet(t) = (1 / ((t+1)^0.4))
+rent_lost(t) = (1 - p_sublet_over_t(t)) * 
+    (1 - p_move_to_sf(t)) *
+    monthly_cost * 
+    (t - 1) *
+    p_not_solved_sublet(t)
+
+time_cost = 50 to 100
+time_marginal_investment(t) = (1 to 10) * p_not_solved_sublet(t)
+time_saving(t) = (1 to 5) * p_move_to_sf(t)
+time_lost(t) = (time_marginal_investment(t)) * 
+    (1 - p_move_to_sf(t)) *
+    time_cost * 
+    (t - 1) -
+    time_saving(t)
+
+
+// keep apartment if {value of keeping} - {value of leaving} > 0
+// obj = {benefit of having apt upon rearrival * P(rearrival) _t} +
+//      {} +
+//      {} +
+//      {} -
+//      {rebuying stuff - selling stuff} -
+//      {lost rent from not having sublet _t} -
+//      {lost time from finding place - organizing stuff}
+
+net_benefit(t) = preference_benefit(t) +
+    stuff_cost -
+    rent_lost(t) -
+    time_lost(t)
+
+{
+    p_move_to_sf: p_move_to_sf,
+    preference_benefit: preference_benefit,
+    stuff_cost: stuff_cost,
+    p_not_solved_sublet: p_not_solved_sublet,
+    rent_lost: rent_lost,
+    time_saving: time_saving,
+    time_lost: time_lost,
+    net_benefit: net_benefit
+}
