@@ -1,0 +1,76 @@
+// London-CDMX return, then Boston; or London-CDMX-Boston direct?
+
+// The tricky considerations are the risk that I would need to cancel the Boston flight, and the costs of bringing the dog to CDMX.
+
+gbp_to_usd = 1.21
+
+flight_baggage_numberbags = mixture(1, 2, 3, [0.6, 0.3, 0.1])
+flight_baggage_costperbag = gbp_to_usd * (30 to 80)
+flight_baggage_cost = flight_baggage_numberbags * flight_baggage_costperbag
+
+flight_seats_withdog = 2
+
+flight_london_CDMX_return = gbp_to_usd * (750 to 850)
+flight_london_boston = gbp_to_usd * (300 to 350)
+flight_london_cdmx = gbp_to_usd * (500 to 600)
+flight_cdmx_boston = gbp_to_usd * (200 to 300)
+
+flight_option_1_percuniarycost = (
+    flight_london_CDMX_return + 
+    (
+        flight_seats_withdog * 
+        (flight_london_boston + flight_baggage_cost)
+    )
+)
+flight_option_2_percuniarycost = (
+    flight_seats_withdog * 
+    (
+        (flight_london_cdmx + flight_baggage_cost) + 
+        (flight_cdmx_boston + flight_baggage_cost)
+    )
+)
+
+rent_daily_CDMX = 35 to 45
+
+daycare_daily_CDMX_daytime = 18 to 22
+daycare_daily_CDMX_overnight = 35 to 45
+daycare_daily_CDMX = daycare_daily_CDMX_daytime + daycare_daily_CDMX_overnight
+
+dogwalks_daily = 2
+dogwalks_cost = 15 to 20
+daycare_daily_london_home = 1 to 10
+daycare_daily_london_walkers = gbp_to_usd * dogwalks_daily * dogwalks_cost
+daycare_daily_london = daycare_daily_london_home + daycare_daily_london_walkers
+
+days_in_CDMX = 4 to 7
+daycare_cost_CDMX = daycare_daily_CDMX * days_in_CDMX
+daycare_cost_london = daycare_daily_london * days_in_CDMX
+
+days_boston_delayed = 1 to 3
+value_daily_boston = 10 to 100
+value_hour_time = 40 to 100
+
+flight_london_CDMX_hours = 11 to 12
+flight_CDMX_london_hours = 10 to 11
+flight_CDMX_boston_hours = 7.5 to 12
+flight_london_boston_hours = 7.5 to 8.5
+flights_hours_fractionworking = truncateRight(0.1 to 1, 1)
+
+flight_option_1_hours = flight_london_CDMX_hours + flight_CDMX_london_hours + flight_london_boston_hours
+flight_option_2_hours = flight_london_CDMX_hours + flight_CDMX_boston_hours
+
+flight_option_1_timecost = flight_option_1_hours * flights_hours_fractionworking * value_hour_time
+flight_option_2_timecost = flight_option_2_hours * flights_hours_fractionworking * value_hour_time
+
+flight_option_1_cost = flight_option_1_percuniarycost + flight_option_1_timecost
+flight_option_2_cost = flight_option_2_percuniarycost + flight_option_2_timecost
+
+// Option 1
+benefit_option_1 = 0
+cost_option_1 = flight_option_1_cost + daycare_cost_london
+netbenefit_option_1 = benefit_option_1 - cost_option_1
+
+// Option 2
+benefit_option_2 = days_boston_delayed * value_daily_boston
+cost_option_2 = flight_option_2_cost + daycare_cost_CDMX
+netbenefit_option_2 = benefit_option_2 - cost_option_2
