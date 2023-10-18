@@ -4,7 +4,7 @@
 
 gbp_to_usd = 1.21
 
-flight_baggage_numberbags = mixture(1, 2, 3, [0.6, 0.3, 0.1])
+flight_baggage_numberbags = mixture(0, 1, 2, 3, [0.4, 0.3, 0.2, 0.1])
 flight_baggage_costperbag = gbp_to_usd * (30 to 80)
 flight_baggage_cost = flight_baggage_numberbags * flight_baggage_costperbag
 
