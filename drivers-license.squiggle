@@ -1,0 +1,44 @@
+// Stay in UK for a bit to get drivers license, or move to US?
+
+// Weighing benefits of being in US (net of living costs) vs benefits of drivers license
+
+// Useful variables
+days_wait_until_driving_test = 20 to 23
+days_in_month = mx(30, 31)
+
+// Benefits of being in US:
+value_daily_US_mental = 10 to 100
+value_daily_US_work = 100k / 365.25
+value_daily_US = value_daily_US_mental + value_daily_US_work
+
+cost_daily_US_rent = (2.5k to 3k) / days_in_month // short-term rentals with dogs are expensive!
+cost_daily_US_dog = 10 to 70
+cost_daily_US_other = (3k to 6k) / days_in_month
+cost_daily_US = cost_daily_US_rent + cost_daily_US_dog + cost_daily_US_other
+
+netbenefit_daily_living_US = value_daily_US - cost_daily_US
+netbenefit_living_US = netbenefit_daily_living_US * days_wait_until_driving_test
+
+netbenefit_driverslisence_US = 0
+
+total_EV_US = netbenefit_living_US + netbenefit_driverslisence_US
+
+// Benefits of drivers license:
+value_daily_UK_mental = normal(-30, 100)
+value_daily_UK_work = 70k / 365.25
+value_daily_UK = value_daily_UK_mental + value_daily_UK_work
+
+cost_daily_UK_rent = 0
+cost_daily_UK_dog = cost_daily_US_dog
+cost_daily_UK_other = cost_daily_US_other - (1k / days_in_month)
+cost_daily_UK = cost_daily_UK_rent + cost_daily_UK_dog + cost_daily_UK_other
+
+netbenefit_daily_living_UK = value_daily_UK - cost_daily_UK
+netbenefit_living_UK = netbenefit_daily_living_UK * days_wait_until_driving_test
+
+serious_driving_trips_per_year = 1 to 3
+value_per_driving_trip = 10 to 1000
+years_of_counterfactual_driving = 3 to 10
+netbenefit_driverslisence_UK = serious_driving_trips_per_year * value_per_driving_trip * years_of_counterfactual_driving
+
+total_EV_UK = netbenefit_living_UK + netbenefit_driverslisence_UK
