@@ -1,0 +1,51 @@
+// Days taken by lawyers
+days_lawyers_PreLetters = 3 to 30
+days_lawyers_LettersFirstDraft = 2 to 10
+days_lawyers_LettersFinalDraft = 10 - truncateRight(to(2, 5), 10)
+days_lawyers_ProduceLetterOfSupport = 21
+days_lawyers_PostLetterOfSupport = 1
+
+days_lawyers = (
+    days_lawyers_PreLetters +
+    days_lawyers_LettersFirstDraft +
+    days_lawyers_LettersFinalDraft +
+    days_lawyers_ProduceLetterOfSupport +
+    days_lawyers_PostLetterOfSupport
+)
+
+// Days taken by me
+days_me_Setup = (1 to 3) * ((160 to 300) / 8)
+days_me_LetterSignatures = 14
+days_me_LetterOfSupport = 5
+
+days_me = (
+    days_me_Setup +
+    days_me_LetterSignatures +
+    days_me_LetterOfSupport
+)
+
+// Days taken by government
+days_government_ReceiveLetterOfSupport = 1
+days_government_O1RFE = 0
+days_government_O1ReceiptToApproval = 10
+days_government_ApprovalToConsularAppointment = 30
+days_government_AdministrativeProcessing = 7 * (2 to 26)
+days_government_StampInPassport = 7 * (1 to 3)
+
+days_government = (
+    days_government_ReceiveLetterOfSupport +
+    days_government_O1RFE +
+    days_government_O1ReceiptToApproval +
+    days_government_ApprovalToConsularAppointment +
+    days_government_AdministrativeProcessing +
+    days_government_StampInPassport
+)
+
+// Total days
+days = (
+    days_lawyers +
+    days_me +
+    days_government
+)
+
+months = days / (365.25 / 12)

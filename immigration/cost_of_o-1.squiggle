@@ -10,7 +10,7 @@ cost_time_aron = hours_aron * pay_aron
 
 // Joel's time
 hours_joel_peerreview_makingithappen = 1 to 5
-hours_joel_peerreview_reviewing = 2 * (10 to 40)
+hours_joel_peerreview_reviewing = 3 * (10 to 40)
 hours_joel_peerreview = hours_joel_peerreview_makingithappen + hours_joel_peerreview_reviewing
 hours_joel_orgsetup = 30 to 100
 hours_joel_lawyers_questions = 30 to 70
