@@ -1,0 +1,91 @@
+// Preliminary variables
+months_until_o1 = 6 // from time of purchasing desk to time entering US
+months_on_o1 = 12 * 3 // (simplified; really `12 * (2 to 4)`)
+
+// Aron's time
+hours_aron = 30 to 300
+pay_aron = 40
+
+cost_time_aron = hours_aron * pay_aron
+
+// Joel's time
+hours_joel_peerreview_makingithappen = 1 to 5
+hours_joel_peerreview_reviewing = 2 * (10 to 40)
+hours_joel_peerreview = hours_joel_peerreview_makingithappen + hours_joel_peerreview_reviewing
+hours_joel_orgsetup = 30 to 100
+hours_joel_lawyers_questions = 30 to 70
+hours_joel_lawyers_formsandletters = 5 to 20
+hours_joel_lawyers = hours_joel_lawyers_questions + hours_joel_lawyers_formsandletters
+hours_joel_letters = 5 to 20
+hours_joel_physicaltrips = 3 * (2 to 7)
+hours_joel_other = 2 to 50 // fudge factor
+hours_joel = (
+    hours_joel_peerreview + 
+    hours_joel_orgsetup + 
+    hours_joel_lawyers + 
+    hours_joel_letters +
+    hours_joel_physicaltrips +
+    hours_joel_other
+)
+pay_joel = 40 to 70
+
+cost_time_joel = hours_joel * pay_joel
+
+// Lawyer costs
+legal_fees = 10.5k
+misc_fees = 200
+
+cost_lawyer = legal_fees + misc_fees
+
+// Immigration admin fees
+i129_filing_fee = 460
+premium_processing_fee = 2.5k
+
+cost_immigration_admin = i129_filing_fee + premium_processing_fee
+
+// Organization costs necessary for visa
+cost_desk_monthly = 250 to 300
+cost_each_lawyer_or_tax_call = 300 to 500
+number_lawyer_or_tax_calls = 3
+
+cost_desk = months_until_o1 * cost_desk_monthly
+cost_incorporating = 800
+cost_lawyer_or_tax_calls = cost_each_lawyer_or_tax_call * number_lawyer_or_tax_calls
+
+cost_necessary_org_expenses = cost_desk + cost_incorporating + cost_lawyer_or_tax_calls
+// TODO: MORE
+
+// Total cost
+total_cost_until_o1 = (
+    cost_time_aron + 
+    cost_time_joel +
+    cost_lawyer +
+    cost_immigration_admin +
+    cost_necessary_org_expenses
+)
+
+// Costs that shouldn't obviously be included (but maybe they should)
+// // Work prevented from doing before getting O-1 (because I couldn't take other jobs for months)
+hours_joel_work_prevented = months_until_o1 * (40 * 4.5) * beta(1, 5)
+cost_joel_work_prevented = hours_joel_work_prevented * pay_joel
+
+// // Cost of desk during O-1 (because I won't use it; required for business address)
+cost_desk_during_o1 = months_on_o1 * cost_desk_monthly
+
+// // Potential tax out of savings (because I'm committed to paying myself if not receiving funding)
+average_tax_rate_on_60k = 0.21
+salary_during_o1 = 5k * months_on_o1
+time_unfunded = beta(1, 5)
+cost_tax_out_of_savings = average_tax_rate_on_60k * salary_during_o1 * time_unfunded
+
+costs_not_obviously_included = (
+    cost_joel_work_prevented +
+    cost_desk_during_o1 + 
+    cost_tax_out_of_savings
+)
+
+// Total cost including costs that shouldn't obviously be included
+total_cost_after_o1 = (
+    total_cost_until_o1 +
+    costs_not_obviously_included
+)
