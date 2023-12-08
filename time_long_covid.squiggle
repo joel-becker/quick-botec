@@ -1,0 +1,47 @@
+// Common parameters
+share_hours_aron = normal(0.65, 0.1)
+wage_aron = 40
+wage_joel = 60
+overhead_percentage = 0.2
+wage_average = (share_hours_aron * wage_aron + (1 - share_hours_aron) * wage_joel) * (1 + overhead_percentage)
+funding_manifund = 8k
+
+// Sunk time
+time_understand_project = 7
+
+// Partially sunk time
+time_prevalence_and_duration = (20 to 25) * 2
+time_symptomatology = (1 to 5) * 2
+
+// Upcoming time
+time_case_projections = 3 to 20
+time_interaction_effects = 10 to 50
+time_add_uncertainty = 10 to 30
+time_internal_discussion = 10 to 50
+time_internal_writeup = 10 to 30
+time_external_discussion = 5 to 20
+time_external_writeup = 20 to 50
+
+// Inside-view and planning-fallacy-adjusted total time
+time_total_insideview = (
+  time_understand_project +
+  time_prevalence_and_duration +
+  time_symptomatology +
+  time_case_projections +
+  time_interaction_effects +
+  time_add_uncertainty +
+  time_internal_discussion +
+  time_internal_writeup +
+  time_external_discussion +
+  time_external_writeup
+)
+
+adjustment_planningfallacy = 1.5 to 2.5
+time_total_planningfallacy = time_total_insideview * adjustment_planningfallacy
+
+// Time funded and unfunded
+time_funded = funding_manifund / wage_average
+time_unfunded = time_total_planningfallacy - time_funded
+
+// Funding gap
+funding_gap = time_unfunded * wage_average
