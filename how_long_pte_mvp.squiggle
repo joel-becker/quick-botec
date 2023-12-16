@@ -1,0 +1,18 @@
+// How long would PTE MVP take
+
+n_benchmarks = 2
+n_pte_categories = 2
+n_pte_per_category = 2
+
+time_searching_per_thing = 0.2 to 2
+time_adjusting_code = 5 to 15
+time_analyzing_results = 1 to 10
+
+factor_planning_fallacy = 2
+
+n_things_to_search_for = n_benchmarks + (n_pte_categories * n_pte_per_category)
+time_searching = n_things_to_search_for * time_searching_per_thing
+
+time_MVP_inside_view = time_searching + time_adjusting_code + time_analyzing_results
+
+time_MVP_planning_fallacy_adjusted = time_MVP_inside_view * factor_planning_fallacy
